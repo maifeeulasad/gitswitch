@@ -117,26 +117,30 @@ static void activate(GtkApplication *app, gpointer user_data)
     grid = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(window), grid);
 
-    listbox = gtk_list_box_new();
-    gtk_grid_attach(GTK_GRID(grid), listbox, 0, 0, 1, 1);
-
     button_add_contact = gtk_button_new_with_label("Add Contact");
-    gtk_grid_attach(GTK_GRID(grid), button_add_contact, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), button_add_contact, 0, 0, 1, 1);
     g_signal_connect(button_add_contact, "clicked", G_CALLBACK(open_dialog), window);
+
+    listbox = gtk_list_box_new();
+    gtk_grid_attach(GTK_GRID(grid), listbox, 0, 1, 1, 1);
+    gtk_widget_set_hexpand(listbox, TRUE);
+    gtk_widget_set_halign(listbox, GTK_ALIGN_FILL);
 
     gtk_container_foreach(GTK_CONTAINER(listbox), (GtkCallback)gtk_widget_destroy, NULL);
 
     for (const auto &contact : accumulatedContacts)
     {
         GtkWidget *row = gtk_list_box_row_new();
-        GtkWidget *label_name = gtk_label_new(contact.getName().c_str());
-        GtkWidget *label_email = gtk_label_new(contact.getEmail().c_str());
 
         GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+        gtk_container_add(GTK_CONTAINER(row), hbox);
+
+        GtkWidget *label_name = gtk_label_new(contact.getName().c_str());
         gtk_box_pack_start(GTK_BOX(hbox), label_name, TRUE, TRUE, 0);
+
+        GtkWidget *label_email = gtk_label_new(contact.getEmail().c_str());
         gtk_box_pack_start(GTK_BOX(hbox), label_email, TRUE, TRUE, 0);
 
-        gtk_container_add(GTK_CONTAINER(row), hbox);
         gtk_list_box_insert(GTK_LIST_BOX(listbox), row, -1);
     }
 
