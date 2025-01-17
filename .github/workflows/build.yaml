@@ -20,7 +20,7 @@ jobs:
         run: sudo apt update && sudo apt upgrade -y
 
       - name: Set up build environment
-        run: sudo apt install qt5-default qt5-qmake build-essential -y
+        run: sudo apt install qt5-qmake build-essential -y
 
       - name: Build project
         run: |
