@@ -20,10 +20,9 @@ jobs:
         run: sudo apt update && sudo apt upgrade -y
 
       - name: Set up build environment
-        run: sudo apt install libgtk-3-dev cmake make -y
-      
-      - name: Set up rxcpp
-        run: git clone https://github.com/ReactiveX/RxCpp.git && cd RxCpp && mkdir build && cd build && cmake .. && make && sudo make install
+        run: sudo apt install qt5-default qt5-qmake build-essential -y
 
       - name: Build project
-        run: make
+        run: |
+          qmake
+          make
