@@ -72,3 +72,8 @@ dkms.conf
 *.la
 *.a
 *.lib
+
+
+# QT
+moc_*.cpp
+moc_*.h
